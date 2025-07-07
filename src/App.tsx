@@ -1,16 +1,20 @@
-import { useState } from 'react'
+
 
 import './App.css'
+import MainLayout from './Layout/Mainlayout'
+
+
+
 
 function App() {
-  const [count, setCount] = useState(0)
+  
 
-  return (
-    <div className="App">
-        <h1 className='text-3xl font-bold underline text-center mt-10'>
-          Vite + React + TypeScript
-        </h1>
+  return (  
+    <div>
+      <MainLayout/>
     </div>
+
+    
   )
 }
 
