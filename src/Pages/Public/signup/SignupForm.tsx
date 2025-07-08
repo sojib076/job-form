@@ -44,7 +44,7 @@ export default function SignupForm() {
     if (signupUser.fulfilled.match(resultAction)) {
       const user = resultAction.payload.user;
       if (user.role === "admin") {
-        navigate("/dashboard/");
+        navigate("/dashboard/admin");
       } else {
         navigate("/dashboard/jobs");
       }

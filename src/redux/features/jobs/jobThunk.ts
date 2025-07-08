@@ -36,7 +36,7 @@ export const fetchJobs = createAsyncThunk(
 export const updateJob = createAsyncThunk<
   string, 
   { jobId: string; updatedData: Partial<JobParams> },
-  { rejectValue: string }
+{ rejectValue: string }
 >(
   "jobs/updateJob",
   async ({ jobId, updatedData }, { rejectWithValue }) => {

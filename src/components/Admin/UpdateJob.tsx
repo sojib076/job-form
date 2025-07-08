@@ -1,6 +1,5 @@
 
 import type React from "react"
-
 import { useState, useEffect } from "react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
@@ -22,16 +21,15 @@ interface Job {
 }
 
 
-
-
-
-
 const UpdateJob = () => {
   
   const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false)
   const [editingJob, setEditingJob] = useState<Job | null>(null)
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState("")
+
+  const userId = useAppSelector((state: RootState) => state.auth.user?._id) || "" // Assuming userId is stored in auth slice
+  console.log("userId", userId);
 
   const [formData, setFormData] = useState({
     _id: "",
@@ -45,7 +43,7 @@ const UpdateJob = () => {
  const { jobs, loading } = useAppSelector((state: RootState) => state.jobs)
  const currentPage = jobs?.meta?.page || 1
   useEffect(() => {
-    dispatch(fetchJobs({ page: 1, limit: 10}))
+    dispatch(fetchJobs({ page: 1, limit: 10 , userId: userId || "" }))
   }, [dispatch ])
 
 
@@ -91,10 +89,7 @@ const handleSubmit = async (e: React.FormEvent) => {
   try {
     const resultAction = await dispatch(updateJob({ jobId, updatedData: formData }));
     if (updateJob.fulfilled.match(resultAction)) {
-        dispatch(fetchJobs({ page: Number(currentPage), limit: 10 }));
-        // close the update modal 
-        
-      
+        dispatch(fetchJobs({ page: Number(currentPage), limit: 10 , userId: userId || "" }));
     } else {
       
       const errorMsg = resultAction.payload || "Failed to update job";
@@ -125,7 +120,7 @@ const handleSubmit = async (e: React.FormEvent) => {
   }
 
   const handlePageChange = (page:number) => {
-   dispatch(fetchJobs({ page, limit: 10 }))
+   dispatch(fetchJobs({ page, limit: 10, userId: userId || "" }))
     
   }
 

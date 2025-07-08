@@ -1,5 +1,6 @@
 export interface JobPayload {
   companyName: string;
+  userId : string;
   position: string;
   contract: "Full Time" | "Part Time";
   location: string;
@@ -8,6 +9,7 @@ export interface JobPayload {
 
 export interface JobParams {
   _id?: string;
+  userId: string;
   companyName?: string;
   location?: string;
   contract?: string;
