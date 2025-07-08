@@ -58,7 +58,7 @@ export default function SignupForm() {
   }
 };
   return (
-    <Card className="w-full ">
+    <Card className="w-full max-w-md mx-auto bg-white/40 shadow-lg rounded-lg p-6 space-y-4 border border-gray-200 ">
       <CardHeader className="space-y-1">
         <CardTitle className="text-2xl font-bold text-center">Create Account</CardTitle>
         <CardDescription className="text-center">Fill in your details to get started</CardDescription>
@@ -120,7 +120,7 @@ export default function SignupForm() {
             <div className="bg-red-50 border border-red-200 text-red-600 px-4 py-3 rounded-md text-sm">{error}</div>
           )}
 
-          <Button type="submit" disabled={isLoading} className="w-full bg-blue-600 hover:bg-blue-700">
+          <Button type="submit" disabled={isLoading} className="w-full bg-sky-400 hover:bg-sky-500">
             {auth.loading ? "Creating Account..." : "Create Account"}
           </Button>
         </form>

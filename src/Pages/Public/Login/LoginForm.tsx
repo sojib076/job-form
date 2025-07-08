@@ -103,7 +103,7 @@ max-w-md mx-auto bg-white/40 shadow-lg rounded-lg p-6 space-y-4 border border-gr
             </div>
           )}
 
-          <Button type="submit" disabled={auth.loading} className="w-full">
+          <Button type="submit" disabled={auth.loading} className="w-full bg-sky-400">
             {loading ? "Signing in..." : "Sign In"}
           </Button>
         </form>
@@ -111,7 +111,7 @@ max-w-md mx-auto bg-white/40 shadow-lg rounded-lg p-6 space-y-4 border border-gr
         <div className="mt-6 text-center">
           <p className="text-sm text-gray-600">
             Don't have an account?{" "}
-            <Link to={'/'} className="text-blue-600 hover:text-blue-500 font-medium">
+            <Link to={'/signup'} className="text-blue-600 hover:text-blue-500 font-medium">
               Sign up here
             </Link>
           </p>

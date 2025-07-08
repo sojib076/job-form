@@ -1,7 +1,7 @@
-import { useState } from "react";
 
-import { ChevronRight, Inbox,User, type LucideIcon} from "lucide-react";
-import { Button } from "./button";
+
+import { Inbox,User, type LucideIcon} from "lucide-react";
+
 import { useAppSelector } from "@/redux/Hook";
 
 import LogoutButton from "./logout";
@@ -18,7 +18,7 @@ interface NavLink {
 }
 
 const Sidenavbar = () => {
-  const [isCollapsed, setIsCollapsed] = useState(false);
+
 
   // Access user role from Redux
   const userRole = useAppSelector((state) => state.auth.user?.role);
@@ -64,18 +64,10 @@ const Sidenavbar = () => {
   });
 
   return (
-    <div className="  relative min-w-[80px] lg:min-h-[100vh] border-r px-3 lg:pt-10">
-      <div className="my-10">
-        <Button
-          variant="default"
-          onClick={() => setIsCollapsed(!isCollapsed)}
-          className="lg:absolute lg:right-[-20%] right-20 lg:top-5 hidden lg:block"
-        >
-          <ChevronRight className="h-6 w-6" />
-        </Button>
-      </div>
+    <div className="   border-r px-3 lg:pt-10">
+     
       <Nav
-        isCollapsed={isCollapsed}
+        isCollapsed={false}
         links={filteredNavLinks}
       />
       <LogoutButton/>

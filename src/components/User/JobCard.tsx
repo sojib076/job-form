@@ -10,7 +10,8 @@ import type { RootState } from "@/redux/store";
 
 
 
-const JobCard = ({ job }: {job:JobParams}) => {
+const JobCard = ({ job ,appliedAt}: {job:JobParams ,appliedAt?:string}) => {
+  console.log("JobCard job:", job);
     const dispatch = useAppDispatch();
     const formatDate = (dateString: string) => {
         return new Date(dateString).toLocaleDateString("en-US", {
@@ -43,15 +44,11 @@ const JobCard = ({ job }: {job:JobParams}) => {
         <div className="relative">
         
           <div className="relative h-32 top-[-30px] overflow-hidden">
-            <img
-              src="/placeholder.svg?height=128&width=400"
-              alt="Company background"
-              className="w-full h-full object-cover"
-            />
-            <div className="absolute inset-0 bg-black/40"></div>
+           
+            <div className="absolute inset-0 bg-black/70"></div>
             <div className="absolute bottom-4 left-4 right-4">
               <div className="flex items-center gap-3">
-                <div className="w-12 h-12 bg-white rounded-lg flex items-center justify-center shadow-md overflow-hidden">
+                <div className="w-12 h-12 bg-white/80 rounded-lg flex items-center justify-center shadow-md overflow-hidden">
                   <img
                     src="https://i.ibb.co/ccWXHgWm/825159-preview.jpg"
                     alt={`${job.companyName} logo`}
@@ -89,7 +86,8 @@ const JobCard = ({ job }: {job:JobParams}) => {
             </div>
             <div className="flex items-center gap-1">
               <Calendar className="h-4 w-4" />
-              <span>{job.createdAt ? formatDate(job.createdAt) : "N/A"}</span>
+              <span>{job.createdAt ? formatDate(job.createdAt) : appliedAt ? formatDate(appliedAt) : 'N/A'}</span>
+              
             </div>
           </div>
 
@@ -102,11 +100,11 @@ const JobCard = ({ job }: {job:JobParams}) => {
           <div className="flex gap-3 pt-2">
              <Button
       onClick={() => job._id && handleApply(job._id)}
-      disabled={isApplying || isApplied || !job._id}
+      disabled={isApplying || isApplied || !job._id || !!appliedAt }
       size="lg"
       className="flex-1 bg-gradient-to-r from-blue-400 to-purple-600 hover:from-blue-500 hover:to-purple-700"
     >
-      {isApplied ? "✅ Applied" : isApplying ? "Applying..." : "Apply Now"}
+      {isApplied || appliedAt ? "✅ Applied" : isApplying ? "Applying..." : "Apply Now"}
     </Button>
               
             

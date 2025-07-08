@@ -1,9 +1,10 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useEffect, useState } from "react";
 
 import { useAppSelector } from "@/redux/Hook";
 import axiosInstance from "@/utils/axiosInstance";
 import { Card, CardContent } from "@/components/ui/card";
-import { MapPin } from "lucide-react";
+import JobCard from "@/components/User/JobCard";
 
 interface Job {
     _id: string;
@@ -90,39 +91,7 @@ const MyAllJobs = () => {
 
                 {applications.map((app) => (
 
-                    <Card className=" shadow-lg max-h-[400px]">
-                        <div className="relative h-48 bg-gradient-to-br from-blue-600 to-purple-700
-                            py-1
-                            ">
-                            <img
-                                src="/placeholder.svg?height=200&width=400"
-                                alt="Company Image"
-                                className="w-full h-full object-cover opacity-20"
-                            />
-                            <div className="absolute inset-0 bg-black/20" />
-                        </div>
-
-                        <CardContent className="p-6 text-center">
-                            <div className="space-y-4">
-                                <div>
-                                    <h2 className="text-2xl font-bold text-gray-900">{app.jobId.companyName}</h2>
-                                </div>
-
-                                <div className="flex items-center justify-center gap-2 text-gray-600">
-                                    <MapPin className="w-4 h-4" />
-                                    <span className="text-sm">
-                                        {app.jobId.location || "Remote"}
-                                    </span>
-                                </div>
-
-                                <div className="pt-4 border-t border-gray-200">
-                                    <p className="text-sm text-gray-500">
-                                        Applied on: {new Date(app.createdAt).toLocaleDateString()}
-                                    </p>
-                                </div>
-                            </div>
-                        </CardContent>
-                    </Card>
+                   <JobCard job={app.jobId} appliedAt={app.createdAt}/>
 
                 ))}
             </ul>

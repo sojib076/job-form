@@ -12,12 +12,7 @@ import MyAllJobs from "@/Pages/Dashboard/User/Myalljobs";
 import JobManagement from "@/components/Admin/UpdateJob";
 import UserRoute from "@/PrivateRoute/UserRoute";
 
-// Route Guards
-// import PrivateRoute from "./PrivateRoute";
-// import AdminRoute from "./AdminRoute";
-// import UserRoute from "./UserRoute";
 
-// Temporary placeholder pages (using <h1> for now)
 
 
 
@@ -30,7 +25,7 @@ const router = createBrowserRouter([
     children: [
       {
         index: true,
-        element: <Home />, // 🏠 Home page
+        element: <Signup/>, 
       },
       {
         path: "login",
