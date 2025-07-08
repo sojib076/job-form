@@ -9,6 +9,8 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { useNavigate } from "react-router-dom"
+import { useAppDispatch } from "@/redux/Hook"
+import { postJob } from "@/redux/features/jobs/jobThunk"
 
 interface JobFormProps {
   jobId?: string
@@ -25,6 +27,7 @@ export default function JobForm({ jobId }: JobFormProps) {
     location: "",
     description: "",
   })
+   const dispatch = useAppDispatch();
 
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState("")
@@ -61,40 +64,20 @@ export default function JobForm({ jobId }: JobFormProps) {
     })
   }
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
-    setIsLoading(true)
-    setError("")
+const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setError("");
+    setIsLoading(true);
 
-    try {
-      const jobData = {
-        ...formData,
-      }
-
-      const url = isEditing ? `/api/jobs/${jobId}` : "/api/jobs"
-      const method = isEditing ? "PUT" : "POST"
-
-      const response = await fetch(url, {
-        method,
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(jobData),
-      })
-
-      if (response.ok) {
-       console.log("Job saved successfully");
-      } else {
-        const data = await response.json()
-        setError(data.error || "Failed to save job")
-      }
-    } catch (error) {
-      console.error("Error saving job:", error)
-      setError("Failed to save job")
-    } finally {
-      setIsLoading(false)
+    const result = await dispatch(postJob(formData));
+    if (postJob.fulfilled.match(result)) {
+      console.log("Job posted!", result.payload);
+    } else {
+      setError(result.payload as string);
     }
-  }
+    setIsLoading(false);
+  };
+
 
   return (
      <div className="space-y-6">
