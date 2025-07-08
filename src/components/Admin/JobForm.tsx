@@ -3,7 +3,7 @@
 
 import type React from "react"
 
-import { useState, useEffect } from "react"
+import { useState } from "react"
 
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -32,30 +32,7 @@ export default function JobForm({ jobId }: JobFormProps) {
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState("")
 
-  useEffect(() => {
-    if (isEditing && jobId) {
-      fetchJob()
-    }
-  }, [isEditing, jobId ])
-
-  const fetchJob = async () => {
-    try {
-      const response = await fetch(`/api/jobs/${jobId}`)
-      if (response.ok) {
-        const job = await response.json()
-        setFormData({
-          companyName: job.companyName,
-          position: job.position,
-          contract: job.contract,
-          location: job.location,
-          description: job.description || "",
-    
-        })
-      }
-    } catch (error) {
-      console.error("Error fetching job:", error)
-    }
-  }
+  
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
     setFormData({
@@ -179,9 +156,9 @@ const handleSubmit = async (e: React.FormEvent) => {
 
               <div className="flex gap-4">
                 <Button type="submit" disabled={isLoading} className="bg-blue-600 hover:bg-blue-700">
-                  {isLoading ? "Saving..." : isEditing ? "Update Job" : "Post Job"}
+                  {isLoading ? "Saving..." : 'Save'}
                 </Button>
-                <Button type="button" variant="outline" onClick={() => router("/admin/jobs")}>
+                <Button type="button" variant="outline" onClick={() => router("/")}>
                   Cancel
                 </Button>
               </div>

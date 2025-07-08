@@ -39,15 +39,14 @@ export default function SignupForm() {
   setError("");
 
   try {
-    // Use your form data directly
     const resultAction = await dispatch(signupUser(formData));
     
     if (signupUser.fulfilled.match(resultAction)) {
       const user = resultAction.payload.user;
       if (user.role === "admin") {
-        navigate("/admin/dashboard");
+        navigate("/dashboard/");
       } else {
-        navigate("/user/dashboard");
+        navigate("/dashboard/jobs");
       }
     } else {
       setError(resultAction.payload as string);
@@ -58,8 +57,6 @@ export default function SignupForm() {
     setIsLoading(false);
   }
 };
-
-
   return (
     <Card className="w-full ">
       <CardHeader className="space-y-1">

@@ -35,7 +35,6 @@ export default function LoginForm() {
     e.preventDefault();
     setError("");
     setLoading(true);
-    console.log("Submitting login form with data:", formData);
     try {
       const resultAction = await dispatch(loginUser(formData));
       setLoading(false);
@@ -44,7 +43,7 @@ export default function LoginForm() {
         if (role === "admin") {
           navigate("/dashboard/admin");
         } else {
-          navigate("/jobs");
+          navigate("/dashboard/jobs");
         }
       } else {
         setError(resultAction.payload as string);

@@ -5,3 +5,15 @@ export interface JobPayload {
   location: string;
   description: string;
 }
+
+export interface JobParams {
+  _id?: string;
+  companyName?: string;
+  location?: string;
+  contract?: string;
+  page?: number;
+  limit?: number;
+  createdAt?: string;
+  position?: string;
+  description?: string;
+}

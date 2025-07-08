@@ -27,16 +27,32 @@ const Sidenavbar = () => {
   const navLinks: NavLink[] = [
     {
       title: "Dashboard",
-      to: "/dashboard",
+      to: "/dashboard/admin",
       icon: Inbox,
-      variant: "default"
+      variant: "default",
+      adminOnly: true,
     },
     {
-      title: "Profile",
-      to: "/dashboard/profile",
+      title: "Jobs Lists",
+      to: "/dashboard/list-jobs",
       icon: User,
       variant: "default",
+      adminOnly: true,
     },
+    {
+      title: "Jobs",
+      to: "/dashboard/jobs",
+      icon: User,
+      variant: "default",
+       userOnly: true,
+    },
+    {
+      title: "My Jobs",
+      to: "/dashboard/myalljobs",
+      icon: User,
+      variant: "default",
+      userOnly: true,
+    }
    
   ];
 

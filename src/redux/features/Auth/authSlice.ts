@@ -3,6 +3,7 @@ import { loginUser, signupUser } from "./authThunk";
 import type { AuthState } from "./authTypes";
 
 const initialState: AuthState = {
+  _id: null, 
   user: null,
   loading: false,
   error: null,

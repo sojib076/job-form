@@ -7,6 +7,10 @@ import PrivateRoute from "@/PrivateRoute/PrivateRoute";
 import DashboardLayout from "@/Layout/DashboardLayout";
 import AdminRoute from "@/PrivateRoute/AdminRoute";
 import AdminPage from "@/Pages/Dashboard/Admin/AdminPage";
+import AllJobs from "@/Pages/Dashboard/User/AllJobs";
+import MyAllJobs from "@/Pages/Dashboard/User/Myalljobs";
+import JobManagement from "@/components/Admin/UpdateJob";
+import UserRoute from "@/PrivateRoute/UserRoute";
 
 // Route Guards
 // import PrivateRoute from "./PrivateRoute";
@@ -54,7 +58,25 @@ const router = createBrowserRouter([
       {
         path: "admin",
         element: <AdminRoute> <AdminPage/> </AdminRoute >, // 🛡️ Admin Dashboard
-      }
+      },
+      {
+        path: "list-jobs",
+        element: <AdminRoute> <JobManagement /> </AdminRoute >,
+      },
+
+ {
+        path:'jobs',
+        element: <UserRoute> 
+          <AllJobs />
+        </UserRoute>
+      },
+      {
+        path: "myalljobs",
+        element:  <UserRoute>
+          <MyAllJobs />
+        </UserRoute>
+      },
+      
     ]
 
   },
