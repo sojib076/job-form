@@ -1,7 +1,6 @@
 import { createBrowserRouter } from "react-router-dom";
 import App from "../App";
 import LoginPage from "@/Pages/Public/Login/Login";
-import Home from "@/Pages/Public/Home/Home";
 import Signup from "@/Pages/Public/signup/signup";
 import PrivateRoute from "@/PrivateRoute/PrivateRoute";
 import DashboardLayout from "@/Layout/DashboardLayout";
@@ -11,11 +10,6 @@ import AllJobs from "@/Pages/Dashboard/User/AllJobs";
 import MyAllJobs from "@/Pages/Dashboard/User/Myalljobs";
 import JobManagement from "@/components/Admin/UpdateJob";
 import UserRoute from "@/PrivateRoute/UserRoute";
-
-
-
-
-
 
 const router = createBrowserRouter([
   // 🟢 PUBLIC ROUTES
@@ -35,11 +29,6 @@ const router = createBrowserRouter([
         path: "signup",
         element: <Signup />, 
       },
-
-      //dashboard routes
-
-
-
 
      
     ],  
