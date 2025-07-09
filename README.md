@@ -1,9 +1,7 @@
 # 🌐 Job Application Frontend
 
-This is the **frontend** of the Job Application Platform. It includes a landing page, user signup/login with **JWT authentication**, and automatic **role assignment** based on email domain.
-
+This is the **frontend** of the Job Application Platform. It Signup page as landing page, user signup/login with **JWT authentication**, and automatic **role assignment** based on email domain.
 ---
-
 ## 📌 Features
 
 - Landing page  
@@ -16,9 +14,7 @@ This is the **frontend** of the Job Application Platform. It includes a landing 
 - **State management with Redux Toolkit and Redux Thunk for async API calls and updates**
 
 ---
-
 ## 🧠 Role Assignment Logic
-
 When a user signs up:
 
 - If their email **ends with `@arnifi.com`**, they are assigned the **admin** role  
