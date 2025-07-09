@@ -41,9 +41,10 @@ const JobCard = ({ job ,appliedAt}: {job:JobParams ,appliedAt?:string}) => {
 
     return (
    <div className="">
-      <Card className="group relative bg-gray-50 border border-gray-100 rounded-2xl overflow-hidden hover:shadow-2xl hover:border-gray-200 transition-all duration-500 hover:scale-[1.02]">
+      <Card className="group relative bg-gray-50 border border-gray-100 rounded-2xl 
+      overflow-hidden hover:shadow-2xl hover:border-gray-200 transition-all duration-500 hover:scale-[1.02]">
         {/* Header Section with Company Info */}
-        <div className="relative bg-gradient-to-br from-slate-200 to-gray-300 p-4 border-b border-gray-100">
+        <div className="relative bg-gradient-to-br from-slate-200 to-gray-300 lg:p-4 p-1 border-b border-gray-100">
           <div className="flex items-start justify-between mb-2">
             <div className="flex items-center gap-3">
               <div className="w-12 h-12 bg-white rounded-xl shadow-sm border border-gray-200 flex items-center justify-center overflow-hidden">
@@ -51,31 +52,34 @@ const JobCard = ({ job ,appliedAt}: {job:JobParams ,appliedAt?:string}) => {
               </div>
               <div>
                 <h3 className="font-semibold text-gray-900 text-sm">{job.companyName}</h3>
-                <div className="flex items-center gap-1 mt-0.5">
-                  <MapPin className="h-3 w-3 text-gray-400" />
-                  <span className="text-xs text-gray-500">{job.location}</span>
-                </div>
+               
               </div>
             </div>
-          <div className="flex items-center gap-2">
+       
               <Badge
-              variant={job.contract === "Full Time" ? "default" : "secondary"}
-              className="bg-blue-50 text-blue-700 border-blue-200 text-xs font-medium hover:bg-blue-100"
-            >
-              {job.contract}
-            </Badge>
-            <Badge
               variant={job.contract === "Full Time" ? "default" : "secondary"}
               className="bg-blue-50 text-blue-700 border-blue-200 text-xs font-medium hover:bg-blue-100"
             >
               {job.position}
             </Badge>
-          </div>
+          
           </div>
           {/* Date */}
-          <div className="flex items-center gap-1.5 text-xs text-gray-500">
-            <Calendar className="h-3 w-3" />
+          <div className="flex items-center justify-between gap-1.5 text-xs text-gray-500">
+        <div className="flex items-center">
+              <Calendar className="h-3 w-3" />
             <span>Posted {job.createdAt ? formatDate(job.createdAt) : appliedAt ? formatDate(appliedAt) : "N/A"}</span>
+        </div>
+             <div className="flex items-center gap-1 mt-0.5">
+                  <MapPin className="h-3 w-3 text-gray-400" />
+                  <span className="text-xs text-gray-500">{job.location}</span>
+                </div>
+                  <Badge
+              variant={job.contract === "Full Time" ? "default" : "secondary"}
+              className="bg-blue-50 text-blue-700 border-blue-200 text-xs font-medium hover:bg-blue-100"
+            >
+              {job.contract}
+            </Badge>
           </div>
         </div>
 

@@ -111,7 +111,7 @@ const AllJobs = () => {
 
             {
               jobs?.meta && jobs.data.length > 0 && (
-                <div className="flex items-center justify-between mt-4 md:w-[20%] w-[70%] mx-auto">
+                <div className="flex items-center justify-between mt-4 md:w-[40%] lg:w-[20%] w-[80%] mx-auto">
                   <div className="flex items-center gap-2">
                     <Button
                       variant="outline"

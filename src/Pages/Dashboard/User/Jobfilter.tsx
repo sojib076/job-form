@@ -105,7 +105,7 @@ const Jobfilter = ({ onFilterChange, loading }: JobFiltersProps) => {
               {loading ? "Searching..." : "Search"}
             </Button>
             {hasActiveFilters && (
-              <Button variant="outline" size="icon" onClick={handleClear}>
+              <Button variant="outline" size="lg" onClick={handleClear}>
                 <X className="h-4 w-4" />
               </Button>
             )}
