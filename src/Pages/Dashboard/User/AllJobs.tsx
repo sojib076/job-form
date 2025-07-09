@@ -15,9 +15,6 @@ import Welcomemessage from "@/components/Welcomemessage"
 import { Button } from "@/components/ui/button"
 
 
-
-
-
 const AllJobs = () => {
   const dispatch = useAppDispatch()
   const { jobs, loading } = useAppSelector((state: RootState) => state.jobs)
