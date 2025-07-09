@@ -8,8 +8,8 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Link, useNavigate } from "react-router-dom"
-import { useDispatch, useSelector } from "react-redux"
-import type { AppDispatch, RootState } from "@/redux/store"
+import { useDispatch } from "react-redux"
+import type { AppDispatch } from "@/redux/store"
 import { signupUser } from "@/redux/features/Auth/authThunk"
 import { toast } from "sonner"
 
@@ -23,8 +23,6 @@ const  SignupForm =()=> {
   const [isLoading, setIsLoading] = useState(false)
  const navigate = useNavigate();
   const dispatch = useDispatch<AppDispatch>();
-
-  const auth = useSelector((state: RootState) => state.auth);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({
@@ -126,7 +124,7 @@ const  SignupForm =()=> {
 
 
           <Button type="submit" disabled={isLoading} className="w-full bg-sky-400 hover:bg-sky-500">
-            {auth.loading ? "Creating Account..." : "Create Account"}
+            {isLoading ? "Creating Account..." : "Create Account"}
           </Button>
         </form>
 
