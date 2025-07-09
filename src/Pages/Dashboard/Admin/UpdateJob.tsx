@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 
 import type React from "react"
 import { useState, useEffect } from "react"
@@ -10,6 +11,7 @@ import { Trash2, Edit, ChevronLeft, ChevronRight, ChevronsLeft, ChevronsRight } 
 import { useAppDispatch, useAppSelector } from "@/redux/Hook"
 import { deleteJob, fetchJobs, updateJob } from "@/redux/features/jobs/jobThunk"
 import type { RootState } from "@/redux/store"
+import { toast } from "sonner"
 interface Job {
   id: number
   _id?: string
@@ -28,8 +30,8 @@ const UpdateJob = () => {
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState("")
 
-  const userId = useAppSelector((state: RootState) => state.auth.user?._id) || "" // Assuming userId is stored in auth slice
-  console.log("userId", userId);
+  const userId = useAppSelector((state: RootState) => state.auth.user?._id) || "" 
+
 
   const [formData, setFormData] = useState({
     _id: "",
@@ -41,7 +43,7 @@ const UpdateJob = () => {
   })
   const dispatch = useAppDispatch()
  const { jobs, loading } = useAppSelector((state: RootState) => state.jobs)
- const currentPage = jobs?.meta?.page || 1
+
   useEffect(() => {
     dispatch(fetchJobs({ page: 1, limit: 10 , userId: userId || "" }))
   }, [dispatch ])
@@ -65,9 +67,13 @@ const UpdateJob = () => {
     const result = await dispatch(deleteJob(id.toString()));
 
   if (deleteJob.fulfilled.match(result)) {
-    alert("Job deleted successfully");
+      toast("Job deleted ", {
+        description: "Your job posting has been successfully created.",
+        duration: 3000,
+      });
+      
   } else {
-    alert(result.payload || "Error deleting job");
+      toast('Something went wrong please try again ')
   }
   }
 
@@ -80,16 +86,19 @@ const UpdateJob = () => {
   }
 
 const handleSubmit = async (e: React.FormEvent) => {
-  console.log('i got hi ');
+ 
   e.preventDefault();
-  setIsLoading(true);
+  
   setError("");
   const jobId = editingJob?._id || ""; 
 
   try {
     const resultAction = await dispatch(updateJob({ jobId, updatedData: formData }));
     if (updateJob.fulfilled.match(resultAction)) {
-        dispatch(fetchJobs({ page: Number(currentPage), limit: 10 , userId: userId || "" }));
+         toast("Job Updated", {
+        description: "Job updated successfully",
+        duration: 3000,
+      });
     } else {
       
       const errorMsg = resultAction.payload || "Failed to update job";

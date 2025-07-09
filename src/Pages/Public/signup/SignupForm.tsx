@@ -12,7 +12,7 @@ import { useDispatch, useSelector } from "react-redux"
 import type { AppDispatch, RootState } from "@/redux/store"
 import { signupUser } from "@/redux/features/Auth/authThunk"
 
-export default function SignupForm() {
+const  SignupForm =()=> {
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -58,7 +58,7 @@ export default function SignupForm() {
   }
 };
   return (
-    <Card className="w-full max-w-md mx-auto bg-white/40 shadow-lg rounded-lg p-6 space-y-4 border border-gray-200 ">
+    <Card className="w-full max-w-md mx-auto bg-white/40 shadow-lg rounded-lg md:p-6 space-y-4 border border-gray-200 ">
       <CardHeader className="space-y-1">
         <CardTitle className="text-2xl font-bold text-center">Create Account</CardTitle>
         <CardDescription className="text-center">Fill in your details to get started</CardDescription>
@@ -137,3 +137,5 @@ export default function SignupForm() {
     </Card>
   )
 }
+
+export default SignupForm

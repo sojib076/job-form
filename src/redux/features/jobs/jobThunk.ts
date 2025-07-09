@@ -24,8 +24,6 @@ export const fetchJobs = createAsyncThunk(
       const response = await axiosInstance.get('/jobs', {
         params,
       });
-
-      console.log("Fetched Jobs:", response.data);
       return response.data; 
     } catch (error: any) {
       return rejectWithValue(error.response?.data || error.message);
@@ -34,7 +32,7 @@ export const fetchJobs = createAsyncThunk(
 );
 
 export const updateJob = createAsyncThunk<
-  string, 
+  JobParams,
   { jobId: string; updatedData: Partial<JobParams> },
 { rejectValue: string }
 >(
@@ -47,7 +45,7 @@ export const updateJob = createAsyncThunk<
         return rejectWithValue("Failed to update the job");
       }
 
-      return jobId;
+      return response.data.data
     } catch (error: any) {
       return rejectWithValue(error.response?.data?.message || "Failed to update job");
     }

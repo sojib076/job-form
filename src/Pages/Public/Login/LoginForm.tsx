@@ -11,7 +11,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux"
 import type { AppDispatch, RootState } from "@/redux/store"
 import { loginUser } from "@/redux/features/Auth/authThunk"
-export default function LoginForm() {
+const  LoginForm =()=> {
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -56,7 +56,7 @@ export default function LoginForm() {
 
   return (
     <Card className="w-full 
-max-w-md mx-auto bg-white/40 shadow-lg rounded-lg p-6 space-y-4 border border-gray-200
+max-w-md mx-auto bg-white/40 shadow-lg rounded-lg md:p-6 space-y-4 border border-gray-200
     
     ">
       <CardHeader className="space-y-1">
@@ -120,3 +120,5 @@ max-w-md mx-auto bg-white/40 shadow-lg rounded-lg p-6 space-y-4 border border-gr
     </Card>
   )
 }
+
+export default LoginForm

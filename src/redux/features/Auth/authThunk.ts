@@ -18,7 +18,7 @@ export const signupUser = createAsyncThunk(
       const { accessToken, refreshToken } = res.data.data
       localStorage.setItem("accessToken", accessToken);
       localStorage.setItem("refreshToken", refreshToken);
-      console.log("res", res.data.data);
+  
       return res.data.data;
     } catch (err: any) {
       return rejectWithValue(err.response?.data?.message || "Signup failed");

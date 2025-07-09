@@ -8,7 +8,7 @@ import AdminRoute from "@/PrivateRoute/AdminRoute";
 import AdminPage from "@/Pages/Dashboard/Admin/AdminPage";
 import AllJobs from "@/Pages/Dashboard/User/AllJobs";
 import MyAllJobs from "@/Pages/Dashboard/User/Myalljobs";
-import JobManagement from "@/components/Admin/UpdateJob";
+import JobManagement from "@/Pages/Dashboard/Admin/UpdateJob";
 import UserRoute from "@/PrivateRoute/UserRoute";
 
 const router = createBrowserRouter([

@@ -6,12 +6,12 @@ import type { JobParams } from "@/utils/types";
 import { useAppDispatch, useAppSelector } from "@/redux/Hook";
 import { applyForJob } from "@/redux/features/Application/ApplicaitonThnuk";
 import type { RootState } from "@/redux/store";
+import { toast } from "sonner";
 
 
 
 
 const JobCard = ({ job ,appliedAt}: {job:JobParams ,appliedAt?:string}) => {
-  console.log("JobCard job:", job);
     const dispatch = useAppDispatch();
     const formatDate = (dateString: string) => {
         return new Date(dateString).toLocaleDateString("en-US", {
@@ -25,27 +25,34 @@ const JobCard = ({ job ,appliedAt}: {job:JobParams ,appliedAt?:string}) => {
     (state: RootState) => state.jobApply.appliedJobIds
   );
 
-  console.log(currentAppliedJobs, "currentAppliedJobs");
 
-  const { loading,applyingJobId } = useAppSelector(
+  const { loading,applyingJobId ,success} = useAppSelector(
     (state: RootState) => state.jobApply
   );
     
     const handleApply = (jobId: string) => {
     if (!currentUser?._id) return alert("You must be logged in to apply");
     dispatch(applyForJob({ jobId, userId: currentUser._id }));
+      if (success) {
+         toast('Job Apply successfully')
+      }
     
   };
   const isApplying = loading && applyingJobId === job._id;
   const isApplied = job._id !== undefined && currentAppliedJobs.includes(job._id);
     return (
         <div>
-            <Card className="hover:shadow-lg max-h-[400px] transition-all duration-300 hover:-translate-y-1 overflow-hidden group">
+          <Card className="hover:shadow-lg md:min-h-[400px] min-h-[340px]  transition-all duration-300 hover:-translate-y-1 overflow-hidden group">
         <div className="relative">
         
-          <div className="relative h-32 top-[-30px] overflow-hidden">
-           
-            <div className="absolute inset-0 bg-black/70"></div>
+          <div className="relative md:h-40 h-20 top-[-30px] overflow-hidden">
+            <img
+              src={ "https://i.ibb.co/ccWXHgWm/825159-preview.jpg"}
+              alt={`${job.companyName} job`}
+               className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+              />
+             
+            <div className="absolute inset-0 bg-black/50"></div>
             <div className="absolute bottom-4 left-4 right-4">
               <div className="flex items-center gap-3">
                 <div className="w-12 h-12 bg-white/80 rounded-lg flex items-center justify-center shadow-md overflow-hidden">
@@ -79,7 +86,7 @@ const JobCard = ({ job ,appliedAt}: {job:JobParams ,appliedAt?:string}) => {
        
 
           {/* Location and Date */}
-          <div className="flex items-center justify-between text-sm text-muted-foreground">
+          <div className="flex items-center justify-between text-sm ">
             <div className="flex items-center gap-1">
               <MapPin className="h-4 w-4" />
               <span className="">{job.location}</span>
@@ -92,9 +99,16 @@ const JobCard = ({ job ,appliedAt}: {job:JobParams ,appliedAt?:string}) => {
           </div>
 
           {/* Description */}
-          {job.description && (
-            <p className="text-sm text-muted-foreground line-clamp-3 leading-relaxed min-h-11">{job.description}</p>
-          )}
+          {job.description ? (
+            <p className="text-sm  line-clamp-3 leading-relaxed min-h-11">{job.description 
+            }</p> 
+
+          ) : <p className="text-sm   line-clamp-3 leading-relaxed min-h-11">
+              We are looking for a dedicated memeber 
+            </p>
+           
+        
+        }
 
           {/* Action Buttons */}
           <div className="flex gap-3 pt-2">

@@ -25,7 +25,7 @@ export const fetchUserAppliedJobs = createAsyncThunk(
   "applications/fetchUserAppliedJobs",
   async (userId: string) => {
     const res = await axiosInstance.get(`/user/applied-jobs/${userId}`);
-    console.log("Fetched applied jobs:", res.data.data);
+
     if (!res.data.success) {
       throw new Error(res.data.message || "Failed to fetch applied jobs");
     }

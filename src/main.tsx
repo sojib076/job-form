@@ -7,16 +7,18 @@ import { RouterProvider } from 'react-router-dom'
 import router from './Routes/Router.tsx'
 import store from './redux/store.ts';
 import { initAuth } from './redux/features/Auth/authSlice.ts';
+import { Toaster } from 'sonner';
+
   store.dispatch(initAuth());
 createRoot(document.getElementById('root')!).render(
 
   <StrictMode>
     <ThemeProvider defaultTheme="light" storageKey="vite-ui-theme">
       <Provider store={store}>
-
-     
+        <Toaster/>
        <RouterProvider router={router}/>
    </Provider>
+   
     </ThemeProvider>
   </StrictMode>,
 )

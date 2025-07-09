@@ -1,6 +1,3 @@
-/* eslint-disable react-hooks/exhaustive-deps */
-
-
 import type React from "react"
 
 import { useState } from "react"
@@ -11,12 +8,14 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { useNavigate } from "react-router-dom"
 import { useAppDispatch } from "@/redux/Hook"
 import { postJob } from "@/redux/features/jobs/jobThunk"
+import Welcomemessage from "../Welcomemessage"
+import { toast } from "sonner"
 
 interface JobFormProps {
   jobId?: string
 }
 
-export default function JobForm({ jobId }: JobFormProps) {
+const  JobForm = ({ jobId }: JobFormProps) => {
   const isEditing = !!jobId
   const router = useNavigate()
 
@@ -48,7 +47,10 @@ const handleSubmit = async (e: React.FormEvent) => {
 
     const result = await dispatch(postJob(formData));
     if (postJob.fulfilled.match(result)) {
-      console.log("Job posted!", result.payload);
+       toast("Job Created successfully ", {
+        description: "Your job posting has been successfully created.",
+        duration: 3000,
+      });
     } else {
       setError(result.payload as string);
     }
@@ -57,8 +59,9 @@ const handleSubmit = async (e: React.FormEvent) => {
 
 
   return (
-     <div className="space-y-6">
-        <Card>
+     <div className="">
+        <Welcomemessage/>
+        <Card className="md:w-[90%] mx-auto">
           <CardHeader>
             <CardTitle>Job Details</CardTitle>
             <CardDescription>
@@ -155,11 +158,11 @@ const handleSubmit = async (e: React.FormEvent) => {
               )}
 
               <div className="flex gap-4">
-                <Button type="submit" disabled={isLoading} className="bg-blue-600 hover:bg-blue-700">
+                <Button type="submit" disabled={isLoading}  size={"lg"} className="bg-sky-600 hover:bg-sky-700">
                   {isLoading ? "Saving..." : 'Save'}
                 </Button>
-                <Button type="button" variant="outline" onClick={() => router("/")}>
-                  Cancel
+                <Button type="button" size={"lg"}  variant="outline" onClick={() => router("/dashboard/list-jobs")}>
+                 All jobs list
                 </Button>
               </div>
             </form>
@@ -168,3 +171,6 @@ const handleSubmit = async (e: React.FormEvent) => {
       </div>
   )
 }
+
+
+export default JobForm

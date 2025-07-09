@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { createSlice } from "@reduxjs/toolkit";
-import { fetchJobs } from "./jobThunk";
+import { deleteJob, fetchJobs, updateJob } from "./jobThunk";
 type JobState = {
     jobs: {
         data: any[]; // Replace 'any' with your specific job type if available
@@ -54,6 +54,21 @@ const jobSlice = createSlice({
         state.loading = false;
         state.error = action.payload as string;
       })
+        .addCase(deleteJob.fulfilled, (state, action) => {
+      const deletedId = action.payload;
+    
+      state.jobs.data = state.jobs.data.filter(job => job._id !== deletedId);
+    })
+     .addCase(updateJob.fulfilled, (state, action) => {
+      const updatedJob = action.payload
+      console.log(updateJob);
+
+      const index = state.jobs.data.findIndex(job => job._id === updatedJob._id);
+      if (index !== -1) {
+        // Replace only the job at that index (for updated info)
+        state.jobs.data[index] = updatedJob;
+      }
+    });
 
   },
 });

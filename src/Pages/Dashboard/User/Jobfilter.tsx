@@ -18,6 +18,7 @@ const Jobfilter = ({ onFilterChange, loading }: JobFiltersProps) => {
     companyName: "",
     location: "",
     contract: "",
+    userId :''
   
   })
 
@@ -33,11 +34,11 @@ const Jobfilter = ({ onFilterChange, loading }: JobFiltersProps) => {
   }
 
   const handleClear = () => {
-    const clearedFilters = { companyName: "", location: "", contract: "All types", createdAt: "" }
+    const clearedFilters = { companyName: "", location: "", contract: "All types", createdAt: "", userId: "" }
     setFilters(clearedFilters)
     onFilterChange({
         page: 1,
-        
+        userId: "",
     })
   }
 
@@ -72,13 +73,15 @@ const Jobfilter = ({ onFilterChange, loading }: JobFiltersProps) => {
               />
             </div>
           </div>
-          <div className="space-y-2">
+          
+          <div className="space-y-2 ">
             <label className="text-sm font-medium">Contract Type</label>
             <Select
+            
               value={filters.contract || "All types"}
               onValueChange={(value) => handleFilterChange("contract", value)}
             >
-              <SelectTrigger>
+              <SelectTrigger className="w-[100%]">
                 <Briefcase className="h-4 w-4 mr-2" />
                 <SelectValue placeholder="All types" />
               </SelectTrigger>
