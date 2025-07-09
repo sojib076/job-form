@@ -2,13 +2,17 @@ import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { logout } from "@/redux/features/Auth/authSlice";
 import { Button } from "./button";
+import { resetJobs } from "@/redux/features/Application/jobApplySlice";
+
 
 const LogoutButton = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const handleLogout = () => {
-    dispatch(logout());
+    dispatch(logout());   // optional if you're using global reset
+dispatch(resetJobs());  
+ 
     navigate("/login"); 
   };
 

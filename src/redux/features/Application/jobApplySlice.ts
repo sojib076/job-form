@@ -27,10 +27,10 @@ const jobApplySlice = createSlice({
     resetSuccess(state) {
       state.success = false;
     },
+     resetJobs: () => initialState, 
   },
   extraReducers: (builder) => {
     builder
-      // applyForJob handlers
       .addCase(applyForJob.pending, (state, action) => {
         state.loading = true;
         state.success = false;
@@ -61,7 +61,7 @@ const jobApplySlice = createSlice({
       })
       .addCase(fetchUserAppliedJobs.fulfilled, (state, action) => {
         state.loading = false;
-        state.appliedJobIds = action.payload; // update appliedJobIds with fetched data
+        state.appliedJobIds = action.payload; 
       })
       .addCase(fetchUserAppliedJobs.rejected, (state, action) => {
         state.loading = false;
@@ -70,5 +70,5 @@ const jobApplySlice = createSlice({
   },
 });
 
-export const { clearError, resetSuccess } = jobApplySlice.actions;
+export const { clearError, resetSuccess ,resetJobs } = jobApplySlice.actions;
 export default jobApplySlice.reducer;

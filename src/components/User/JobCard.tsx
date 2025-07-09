@@ -24,8 +24,6 @@ const JobCard = ({ job ,appliedAt}: {job:JobParams ,appliedAt?:string}) => {
     const currentAppliedJobs = useAppSelector(
     (state: RootState) => state.jobApply.appliedJobIds
   );
-
-
   const { loading,applyingJobId ,success} = useAppSelector(
     (state: RootState) => state.jobApply
   );
@@ -40,7 +38,7 @@ const JobCard = ({ job ,appliedAt}: {job:JobParams ,appliedAt?:string}) => {
   };
   const isApplying = loading && applyingJobId === job._id;
   const isApplied = job._id !== undefined && currentAppliedJobs.includes(job._id);
-  console.log(job);
+
     return (
    <div className="">
       <Card className="group relative bg-gray-50 border border-gray-100 rounded-2xl overflow-hidden hover:shadow-2xl hover:border-gray-200 transition-all duration-500 hover:scale-[1.02]">

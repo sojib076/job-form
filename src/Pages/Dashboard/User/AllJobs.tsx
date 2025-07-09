@@ -1,4 +1,4 @@
-/* eslint-disable react-hooks/exhaustive-deps */
+
 "use client"
 
 import { useEffect, useState } from "react"
@@ -22,18 +22,21 @@ const AllJobs = () => {
   const dispatch = useAppDispatch()
   const { jobs, loading } = useAppSelector((state: RootState) => state.jobs)
 
-
   const currentUser = useAppSelector((state) => state.auth.user);
 
-
   const [currentFilters, setCurrentFilters] = useState<JobParams>({})
+
+  useEffect(() => {
+    if (currentUser?._id) {
+      dispatch(fetchUserAppliedJobs(currentUser._id))
+    }
+  }, [currentUser, dispatch])
 
   useEffect(() => {
 
     dispatch(fetchJobs({
       page: 1, limit: 3,
     }))
-    dispatch(fetchUserAppliedJobs(currentUser?._id || ""))
   }, [dispatch])
 
   const handleFilterChange = (filters: JobParams) => {

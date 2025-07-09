@@ -51,6 +51,13 @@ const handleSubmit = async (e: React.FormEvent) => {
         description: "Your job posting has been successfully created.",
         duration: 3000,
       });
+      setFormData({
+        companyName: "",
+        position: "",
+        contract: "Full Time",
+        location: "",
+        description: "",
+      });
     } else {
       setError(result.payload as string);
     }

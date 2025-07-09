@@ -37,6 +37,7 @@ const jobSlice = createSlice({
     clearError: (state) => {
       state.error = null;
     },
+     resetJobs: () => initialState, 
   },
   extraReducers: (builder) => {
     builder
@@ -61,7 +62,6 @@ const jobSlice = createSlice({
     })
      .addCase(updateJob.fulfilled, (state, action) => {
       const updatedJob = action.payload
-  
 
       const index = state.jobs.data.findIndex(job => job._id === updatedJob._id);
       if (index !== -1) {
@@ -73,5 +73,5 @@ const jobSlice = createSlice({
   },
 });
 
-export const { clearError } = jobSlice.actions;
+export const { clearError ,resetJobs } = jobSlice.actions;
 export default jobSlice.reducer;
