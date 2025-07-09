@@ -38,8 +38,8 @@ const  SignupForm =()=> {
   setIsLoading(true);
 
   try {
+    // this user react thunk to dispatch the signup action and save on auth slice
     const resultAction = await dispatch(signupUser(formData));
-    
     if (signupUser.fulfilled.match(resultAction)) {
       const user = resultAction.payload.user;
       if (user.role === "admin") {

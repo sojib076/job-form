@@ -18,7 +18,8 @@ interface JobFormProps {
 const  JobForm = ({ jobId }: JobFormProps) => {
   const isEditing = !!jobId
   const router = useNavigate()
-
+  // Initial form data state
+  // This form is used to create
   const [formData, setFormData] = useState({
     companyName: "",
     position: "",
@@ -31,20 +32,21 @@ const  JobForm = ({ jobId }: JobFormProps) => {
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState("")
 
-  
-
+  // Handle input changes and update form data state
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
     setFormData({
       ...formData,
       [e.target.name]: e.target.value,
     })
   }
-
+  // Handle form submission
+  // This function will be called when the user submits the form
 const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError("");
     setIsLoading(true);
-
+    // this function will dispatch the postJob thunk action
+    // and pass the formData as payload
     const result = await dispatch(postJob(formData));
     if (postJob.fulfilled.match(result)) {
        toast("Job Created successfully ", {

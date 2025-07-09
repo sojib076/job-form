@@ -33,6 +33,7 @@ const LoginForm = () => {
     e.preventDefault();
     setLoading(true);
     try {
+      // this user react thunk to dispatch the login action and save on auth slice
       const resultAction = await dispatch(loginUser(formData));
       setLoading(false);
       if (loginUser.fulfilled.match(resultAction)) {

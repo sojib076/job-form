@@ -93,7 +93,7 @@ const Dashboard = () => {
                         List of Jobs
                       </Link>
                     ) : <Link to={'/dashboard/myalljobs'} className="flex-1">
-                      Applied JObs
+                      Applied Jobs
                     </Link>
                   }
                 </DropdownMenuItem>

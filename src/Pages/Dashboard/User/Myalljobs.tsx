@@ -33,7 +33,7 @@ const MyAllJobs = () => {
     const [meta, setMeta] = useState<Meta | null>(null);
     const [loading, setLoading] = useState(false);
     const [page, setPage] = useState(1);
-
+    // this just axois instance to fetch the data from the server
     const userId = useAppSelector((state) => state.auth.user?._id);
     useEffect(() => {
         if (!userId) return;
@@ -60,7 +60,7 @@ const MyAllJobs = () => {
 
    
     return (
-        <div className="p-4 w-[90%] mx-auto">
+        <div className="p-4  mx-auto">
             <h2 className="text-xl font-semibold mb-4">Jobs You Applied For</h2>
             {applications.length === 0 && !loading && <p>No applications yet.</p>}
 

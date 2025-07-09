@@ -22,7 +22,8 @@ const AllJobs = () => {
   const currentUser = useAppSelector((state) => state.auth.user);
 
   const [currentFilters, setCurrentFilters] = useState<JobParams>({})
-
+  // This save the user's applied jobs in the state
+  // so that we can use it later to show the applied jobs in the dashboard
   useEffect(() => {
     if (currentUser?._id) {
       dispatch(fetchUserAppliedJobs(currentUser._id))
@@ -36,6 +37,7 @@ const AllJobs = () => {
     }))
   }, [dispatch])
 
+// Handle filter change and reset pagination
   const handleFilterChange = (filters: JobParams) => {
     const newFilters = { ...filters, page: 1, limit: 3 }
     setCurrentFilters(newFilters)
@@ -43,7 +45,8 @@ const AllJobs = () => {
   }
 
 
-
+  // Handle page change and fetch jobs with current filters
+  // This function will be called when the user clicks on pagination buttons
   const handlePageChange = (page: number) => {
     const { location, contract, companyName, } = currentFilters
     dispatch(fetchJobs({ page, limit: 3, location, contract, companyName, }))

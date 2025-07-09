@@ -93,6 +93,7 @@ const handleSubmit = async (e: React.FormEvent) => {
   const jobId = editingJob?._id || ""; 
 
   try {
+
     const resultAction = await dispatch(updateJob({ jobId, updatedData: formData }));
     if (updateJob.fulfilled.match(resultAction)) {
          toast("Job Updated", {
@@ -257,7 +258,7 @@ const handleSubmit = async (e: React.FormEvent) => {
           </div>
         </CardContent>
       </Card>
-
+        {/*  Admin can update the job   */}
       <Dialog open={isUpdateModalOpen} onOpenChange={setIsUpdateModalOpen}>
         <DialogContent className="max-w-2xl">
           <DialogHeader>
@@ -363,6 +364,7 @@ const handleSubmit = async (e: React.FormEvent) => {
           </Card>
         </DialogContent>
       </Dialog>
+
     </div>
     );
 };

@@ -21,18 +21,19 @@ const Jobfilter = ({ onFilterChange, loading }: JobFiltersProps) => {
     userId :''
   
   })
-
+  // This function handles the filter changes and updates the filters state
   const handleFilterChange = (key: keyof JobParams, value: string) => {
 
     
     const newFilters = { ...filters, [key]: value || undefined }
     setFilters(newFilters)
   }
-
+  // This function handles the search button click and calls the onFilterChange prop
   const handleSearch = () => {
     onFilterChange({ ...filters, page: 1 })
   }
-
+  // This function clears the filters and resets the state
+  // It also calls the onFilterChange prop with default values
   const handleClear = () => {
     const clearedFilters = { companyName: "", location: "", contract: "All types", createdAt: "", userId: "" }
     setFilters(clearedFilters)
