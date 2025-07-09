@@ -27,129 +27,141 @@ const AllJobs = () => {
 
 
   const [currentFilters, setCurrentFilters] = useState<JobParams>({})
-  console.log("Current Filters:", currentFilters);
+
   useEffect(() => {
 
     dispatch(fetchJobs({
-      page: 1, limit: 5,
+      page: 1, limit: 3,
     }))
     dispatch(fetchUserAppliedJobs(currentUser?._id || ""))
   }, [dispatch])
 
   const handleFilterChange = (filters: JobParams) => {
-    const newFilters = { ...filters, page: 1, limit: 10 }
+    const newFilters = { ...filters, page: 1, limit: 3 }
     setCurrentFilters(newFilters)
     dispatch(fetchJobs(newFilters))
   }
 
-const handlePageChange = (page:number) => {
-   dispatch(fetchJobs({ page, limit: 5}))
-    
+
+
+  const handlePageChange = (page: number) => {
+    const { location, contract, companyName, } = currentFilters
+    dispatch(fetchJobs({ page, limit: 3, location, contract, companyName, }))
   }
   return (
     <div>
-      <Welcomemessage/>
+      <Welcomemessage />
       <div className="min-h-screen bg-gray-200 rounded-2xl">
-      
-      <div className="">
-        <div className="md:container mx-auto px-4 md:py-8 py-4">
-          {/* Header */}
-          <div className="mb-8
+
+        <div className="">
+          <div className="md:container mx-auto px-4 md:py-8 py-4 min-h-[60vh]">
+            {/* Header */}
+            <div className="mb-8
           
         ">
-            <div className="flex items-center gap-3 mb-4">
-              
-              <h1 className="text-3xl font-bold">
-                All Avaiable Jobs
+              <div className="flex items-center gap-3 mb-4">
 
-              </h1>
+                <h1 className="text-3xl font-bold">
+                  All Avaiable Jobs
+
+                </h1>
+              </div>
+              <p className="text-muted-foreground">Discover your next career opportunity from our curated job listings</p>
             </div>
-            <p className="text-muted-foreground">Discover your next career opportunity from our curated job listings</p>
-          </div>
 
-          {/* Filters */}
-          <div className="mb-8">
-            <Jobfilter onFilterChange={handleFilterChange} loading={loading} />
-          </div>
-
-  
-         
-
-          {
-            jobs?.data?.length === 0 && !loading && (
-              <Alert className="mb-6">
-                <AlertCircle className="h-4 w-4" />
-                <AlertDescription>No jobs found matching your criteria.</AlertDescription>
-              </Alert>
-            )
-          }
-
-        
-
-          {loading ? (
-            <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3 min-h-screen">
-              {Array.from({ length: 6 }).map((_, i) => (
-                <div key={i} className="bg-muted animate-pulse h-[400px] rounded-lg" />
-              ))}
+            {/* Filters */}
+            <div className="mb-8">
+              <Jobfilter onFilterChange={handleFilterChange} loading={loading} />
             </div>
-          ) : jobs?.data?.length > 0 && (
-            <>
-              <div className="grid gap-6  md:grid-cols-2 lg:grid-cols-3 md:mb-8">
-                {(jobs.data as { _id: string }[]).map((job) => (
-                  <JobCard key={job._id} job={job} />
+
+
+
+
+            {
+              jobs?.data?.length === 0 && !loading && (
+                <Alert className="mb-6">
+                  <AlertCircle className="h-4 w-4" />
+                  <AlertDescription>No jobs found matching your criteria.</AlertDescription>
+                </Alert>
+              )
+            }
+
+
+
+            {loading ? (
+              <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3 ">
+                {Array.from({ length: 3 }).map((_, i) => (
+                  <div key={i} className="bg-muted animate-pulse md:h-[317px] h-[300px] rounded-lg" />
                 ))}
               </div>
-            </>
-          )
+            ) : jobs?.data?.length > 0 && (
+              <>
+                <div className="grid gap-6  md:grid-cols-2 lg:grid-cols-3 md:mb-8">
+                  {(jobs.data as { _id: string }[]).map((job) => (
+                    <JobCard key={job._id} job={job} />
+                  ))}
+                </div>
+              </>
+            )
 
+            }
 
+            {
+              jobs?.meta && jobs.data.length > 0 && (
+                <div className="flex items-center justify-between mt-4 md:w-[20%] w-[70%] mx-auto">
+                  <div className="flex items-center gap-2">
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      onClick={() => handlePageChange(1)}
+                      disabled={jobs?.meta?.page === 1 || loading}
+                    >
+                      <ChevronsLeft className="h-4 w-4" />
+                    </Button>
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      onClick={() => handlePageChange(jobs.meta.page - 1)}
+                      disabled={jobs?.meta?.page === 1
 
+                        || loading
+                      }
+                    >
+                      <ChevronLeft className="h-4 w-4" />
+                    </Button>
+                    <span className="text-sm text-gray-600">
+                      Page {jobs?.meta.page} of {jobs?.meta?.totalPages}
+                    </span>
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      onClick={() => handlePageChange(jobs.meta.page + 1)}
+                      disabled={jobs?.meta?.page === jobs?.meta?.totalPages
+                        || loading
 
-          }
+                      }
+                    >
+                      <ChevronRight className="h-4 w-4" />
+                    </Button>
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      onClick={() => handlePageChange(jobs?.meta?.totalPages)}
+                      disabled={jobs?.meta?.page === jobs?.meta?.totalPages
+                        || loading
 
-  <div className="flex items-center justify-between mt-4">
-            <div className="flex items-center gap-2">
-              <Button
-                variant="outline"
-                size="sm"
-                onClick={() => handlePageChange(1)}
-                disabled={jobs?.meta?.page === 1}
-              >
-                <ChevronsLeft className="h-4 w-4" />
-              </Button>
-              <Button
-                variant="outline"
-                size="sm"
-                onClick={() => handlePageChange(jobs.meta.page - 1)}
-                disabled={jobs?.meta?.page === 1}
-              >
-                <ChevronLeft className="h-4 w-4" />
-              </Button>
-              <span className="text-sm text-gray-600">
-                Page {jobs?.meta.page} of {jobs?.meta?.totalPages}
-              </span>
-              <Button
-                variant="outline"
-                size="sm"
-                onClick={() => handlePageChange(jobs.meta.page + 1)}
-                disabled={jobs?.meta?.page === jobs?.meta?.totalPages}
-              >
-                <ChevronRight className="h-4 w-4" />
-              </Button>
-              <Button
-                variant="outline"
-                size="sm"
-                onClick={() => handlePageChange(jobs?.meta?.totalPages)}
-                disabled={jobs?.meta?.page === jobs?.meta?.totalPages}
-              >
-                <ChevronsRight className="h-4 w-4" />
-              </Button>
-            </div>
+                      }
+                    >
+                      <ChevronsRight className="h-4 w-4" />
+                    </Button>
+                  </div>
+                </div>
+              )
+            }
+
           </div>
-
         </div>
       </div>
-    </div>
     </div>
   );
 };

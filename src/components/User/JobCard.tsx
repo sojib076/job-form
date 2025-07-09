@@ -40,92 +40,91 @@ const JobCard = ({ job ,appliedAt}: {job:JobParams ,appliedAt?:string}) => {
   };
   const isApplying = loading && applyingJobId === job._id;
   const isApplied = job._id !== undefined && currentAppliedJobs.includes(job._id);
+  console.log(job);
     return (
-        <div>
-          <Card className="hover:shadow-lg md:min-h-[400px] min-h-[340px]  transition-all duration-300 hover:-translate-y-1 overflow-hidden group">
-        <div className="relative">
-        
-          <div className="relative md:h-40 h-20 top-[-30px] overflow-hidden">
-            <img
-              src={ "https://i.ibb.co/ccWXHgWm/825159-preview.jpg"}
-              alt={`${job.companyName} job`}
-               className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
-              />
-             
-            <div className="absolute inset-0 bg-black/50"></div>
-            <div className="absolute bottom-4 left-4 right-4">
-              <div className="flex items-center gap-3">
-                <div className="w-12 h-12 bg-white/80 rounded-lg flex items-center justify-center shadow-md overflow-hidden">
-                  <img
-                    src="https://i.ibb.co/ccWXHgWm/825159-preview.jpg"
-                    alt={`${job.companyName} logo`}
-                    className="w-full h-full object-cover"
-                  />
-                </div>
-                <div className="text-white">
-    
-                  <p className="text-blue-100 text-xl">{job.companyName}</p>
+   <div className="">
+      <Card className="group relative bg-gray-50 border border-gray-100 rounded-2xl overflow-hidden hover:shadow-2xl hover:border-gray-200 transition-all duration-500 hover:scale-[1.02]">
+        {/* Header Section with Company Info */}
+        <div className="relative bg-gradient-to-br from-slate-200 to-gray-300 p-4 border-b border-gray-100">
+          <div className="flex items-start justify-between mb-2">
+            <div className="flex items-center gap-3">
+              <div className="w-12 h-12 bg-white rounded-xl shadow-sm border border-gray-200 flex items-center justify-center overflow-hidden">
+                <img src="https://i.ibb.co/ccWXHgWm/825159-preview.jpg" alt="Company logo" className="w-8 h-8 object-cover" />
+              </div>
+              <div>
+                <h3 className="font-semibold text-gray-900 text-sm">{job.companyName}</h3>
+                <div className="flex items-center gap-1 mt-0.5">
+                  <MapPin className="h-3 w-3 text-gray-400" />
+                  <span className="text-xs text-gray-500">{job.location}</span>
                 </div>
               </div>
             </div>
-          </div>
-
-          {/* Contract Badge */}
-          <div className="absolute top-4 right-4">
-            <Badge
+          <div className="flex items-center gap-2">
+              <Badge
               variant={job.contract === "Full Time" ? "default" : "secondary"}
-              className="bg-white/90 text-gray-800 hover:bg-white"
+              className="bg-blue-50 text-blue-700 border-blue-200 text-xs font-medium hover:bg-blue-100"
             >
               {job.contract}
             </Badge>
+            <Badge
+              variant={job.contract === "Full Time" ? "default" : "secondary"}
+              className="bg-blue-50 text-blue-700 border-blue-200 text-xs font-medium hover:bg-blue-100"
+            >
+              {job.position}
+            </Badge>
+          </div>
+          </div>
+          {/* Date */}
+          <div className="flex items-center gap-1.5 text-xs text-gray-500">
+            <Calendar className="h-3 w-3" />
+            <span>Posted {job.createdAt ? formatDate(job.createdAt) : appliedAt ? formatDate(appliedAt) : "N/A"}</span>
           </div>
         </div>
 
-        <CardContent className="p-6 space-y-4">
-       
-       
-
-          {/* Location and Date */}
-          <div className="flex items-center justify-between text-sm ">
-            <div className="flex items-center gap-1">
-              <MapPin className="h-4 w-4" />
-              <span className="">{job.location}</span>
-            </div>
-            <div className="flex items-center gap-1">
-              <Calendar className="h-4 w-4" />
-              <span>{job.createdAt ? formatDate(job.createdAt) : appliedAt ? formatDate(appliedAt) : 'N/A'}</span>
-              
-            </div>
-          </div>
-
+        {/* Content Section */}
+        <CardContent className="p-4 space-y-3">
           {/* Description */}
-          {job.description ? (
-            <p className="text-sm  line-clamp-3 leading-relaxed min-h-11">{job.description 
-            }</p> 
-
-          ) : <p className="text-sm   line-clamp-3 leading-relaxed min-h-11">
-              We are looking for a dedicated memeber 
-            </p>
-           
-        
-        }
-
-          {/* Action Buttons */}
-          <div className="flex gap-3 pt-2">
-             <Button
-      onClick={() => job._id && handleApply(job._id)}
-      disabled={isApplying || isApplied || !job._id || !!appliedAt }
-      size="lg"
-      className="flex-1 bg-gradient-to-r from-blue-400 to-purple-600 hover:from-blue-500 hover:to-purple-700"
-    >
-      {isApplied || appliedAt ? "✅ Applied" : isApplying ? "Applying..." : "Apply Now"}
-    </Button>
-              
-            
+          <div className="min-h-[3rem]">
+            {job.description ? (
+              <p className="text-sm text-gray-600 leading-relaxed line-clamp-3">{job.description}</p>
+            ) : (
+              <p className="text-sm text-gray-600 leading-relaxed line-clamp-3">
+                We are looking for a dedicated member
+              </p>
+            )}
           </div>
+
+          {/* Action Button */}
+          <Button
+            onClick={() => job._id && handleApply(job._id)}
+            disabled={isApplying || isApplied || !job._id || !!appliedAt}
+            className={`w-full h-10 rounded-xl font-medium transition-all duration-300 ${
+              isApplied || appliedAt
+                ? "bg-green-50 text-green-700 border border-green-200 hover:bg-green-100"
+                : "bg-gray-900 hover:bg-gray-800 text-white shadow-lg hover:shadow-xl"
+            }`}
+            variant={isApplied || appliedAt ? "outline" : "default"}
+          >
+            {isApplied || appliedAt ? (
+              <span className="flex items-center gap-2">
+                <span className="w-2 h-2 bg-green-500 rounded-full"></span>
+                Applied
+              </span>
+            ) : isApplying ? (
+              <span className="flex items-center gap-2">
+                <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin"></div>
+                Applying...
+              </span>
+            ) : (
+              "Apply Now"
+            )}
+          </Button>
         </CardContent>
+
+        {/* Subtle hover indicator */}
+        <div className="absolute inset-0 rounded-2xl ring-1 ring-inset ring-gray-900/5 group-hover:ring-gray-900/10 transition-all duration-300 pointer-events-none"></div>
       </Card>
-        </div>
+    </div>
     );
 };
 

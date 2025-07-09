@@ -11,6 +11,7 @@ import { Link, useNavigate } from "react-router-dom"
 import { useDispatch, useSelector } from "react-redux"
 import type { AppDispatch, RootState } from "@/redux/store"
 import { signupUser } from "@/redux/features/Auth/authThunk"
+import { toast } from "sonner"
 
 const  SignupForm =()=> {
   const [formData, setFormData] = useState({
@@ -20,7 +21,6 @@ const  SignupForm =()=> {
     confirmPassword: "",
   })
   const [isLoading, setIsLoading] = useState(false)
-  const [error, setError] = useState("")
  const navigate = useNavigate();
   const dispatch = useDispatch<AppDispatch>();
 
@@ -36,7 +36,6 @@ const  SignupForm =()=> {
  const handleSubmit = async (e: React.FormEvent) => {
   e.preventDefault();
   setIsLoading(true);
-  setError("");
 
   try {
     const resultAction = await dispatch(signupUser(formData));
@@ -49,10 +48,21 @@ const  SignupForm =()=> {
         navigate("/dashboard/jobs");
       }
     } else {
-      setError(resultAction.payload as string);
+      
+      toast(resultAction.payload as string,)
     }
-  } catch (error: any) {
-    setError(error.message || "Signup failed");
+  } catch (error) {
+   
+    if (error instanceof Error) {
+      toast(error.message || "Signup failed. Please try again.", {
+        description: "Please check your details and try again.",
+      });
+    } else {
+      toast("An unexpected error occurred. Please try again.", {
+        description: "Please try again later.",
+      });
+    }
+
   } finally {
     setIsLoading(false);
   }
@@ -114,11 +124,6 @@ const  SignupForm =()=> {
             />
           </div>
 
-          
-
-          {auth.error && (
-            <div className="bg-red-50 border border-red-200 text-red-600 px-4 py-3 rounded-md text-sm">{error}</div>
-          )}
 
           <Button type="submit" disabled={isLoading} className="w-full bg-sky-400 hover:bg-sky-500">
             {auth.loading ? "Creating Account..." : "Create Account"}

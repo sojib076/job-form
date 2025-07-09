@@ -61,7 +61,7 @@ const jobSlice = createSlice({
     })
      .addCase(updateJob.fulfilled, (state, action) => {
       const updatedJob = action.payload
-      console.log(updateJob);
+  
 
       const index = state.jobs.data.findIndex(job => job._id === updatedJob._id);
       if (index !== -1) {

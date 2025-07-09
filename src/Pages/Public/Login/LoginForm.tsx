@@ -8,16 +8,15 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Link, useNavigate } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux"
-import type { AppDispatch, RootState } from "@/redux/store"
+import { useDispatch } from "react-redux"
+import type { AppDispatch } from "@/redux/store"
 import { loginUser } from "@/redux/features/Auth/authThunk"
-const  LoginForm =()=> {
+import { toast } from "sonner"
+const LoginForm = () => {
   const [formData, setFormData] = useState({
     email: "",
     password: "",
   })
-
-  const [error, setError] = useState("")
   const [loading, setLoading] = useState(false)
   const navigate = useNavigate();
 
@@ -29,28 +28,36 @@ const  LoginForm =()=> {
   }
   const dispatch = useDispatch<AppDispatch>();
 
-  const auth = useSelector((state: RootState) => state.auth);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setError("");
     setLoading(true);
     try {
       const resultAction = await dispatch(loginUser(formData));
       setLoading(false);
       if (loginUser.fulfilled.match(resultAction)) {
-         const role = resultAction.payload.user.role;
+        const role = resultAction.payload.user.role;
         if (role === "admin") {
           navigate("/dashboard/admin");
         } else {
           navigate("/dashboard/jobs");
         }
       } else {
-        setError(resultAction.payload as string);
+        toast(resultAction.payload as string, {
+          description: "Please try again.",
+        })
       }
     } catch (err) {
       setLoading(false);
-      setError("Something went wrong.");
+      if (err instanceof Error) {
+        toast(err.message || "Login failed. Please try again.", {
+          description: "Please check your credentials and try again.",
+        })
+      } else {
+        toast("An unexpected error occurred. Please try again.", {
+          description: "Please try again later.",
+        })
+      }
     }
   };
 
@@ -97,13 +104,14 @@ max-w-md mx-auto bg-white/40 shadow-lg rounded-lg md:p-6 space-y-4 border border
             />
           </div>
 
-          {(auth.error || error) && (
-            <div className="bg-red-50 border border-red-200 text-red-600 px-4 py-3 rounded-md text-sm">
-              {auth.error || error}
-            </div>
-          )}
 
-          <Button type="submit" disabled={auth.loading} className="w-full bg-sky-400">
+
+          <Button
+
+
+            type="submit" disabled={loading} className="w-full bg-sky-400
+hover:bg-sky-500 transition-colors disabled:opacity-50 disabled:cursor-not-allowed
+          ">
             {loading ? "Signing in..." : "Sign In"}
           </Button>
         </form>
